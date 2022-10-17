@@ -65,6 +65,7 @@ public class zad1 {
         int n;
 
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Podaj liczbe :");
         n = scanner.nextInt();
 
         right(n);
