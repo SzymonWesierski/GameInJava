@@ -35,15 +35,12 @@ public class zad3 {
     }
 
     public static boolean theSameNumberBin(String bin){
-        if (checkBin(bin) == false){
-            return false;
+        if (checkBin(bin)){
+            if(numberZero(bin) == numberOne(bin)){
+                return true;
+            }
         }
-
-        if(numberZero(bin) != numberOne(bin)){
-            return false;
-        }
-
-        return true;
+        return false;
     }
 }
 
