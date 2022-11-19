@@ -1,7 +1,11 @@
 public class Warehouse {
-    private Product[] product = new Product[];
+    private Product[] productlist = new Product[];
 
     public Product[] getProduct() {
-        return product;
+        return productlist;
+    }
+    
+    public Warehouse(int number){
+        this.productlist = new Product[number];
     }
 }
