@@ -6,7 +6,7 @@ import utilz.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static main.Game.TILES_SIZE;
+import static main.Game.*;
 
 public class LevelManager {
     private final Game game;
@@ -32,6 +32,10 @@ public class LevelManager {
     }
 
     public void draw(Graphics g){
+        //background
+        g.drawImage(LoadSave.GetBackgroundImage(LoadSave.BACKGROUND_DATA),0,0,GAME_WIDTH,GAME_HEIGHT,null);
+
+        //level
         for(int j = 0; j< Game.TILES_IN_HEIGHT; j++)
             for(int i = 0; i < Game.TILES_IN_WIDTH; i++){
                 int index = levelOne.getSpriteIndex(i, j);

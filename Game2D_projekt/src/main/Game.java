@@ -42,7 +42,7 @@ public class Game implements Runnable{
 
     public void update(){
         player.update();
-        System.out.println(player);
+        //System.out.println(player);
         levelManager.update();
     }
 
