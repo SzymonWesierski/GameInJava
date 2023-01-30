@@ -4,6 +4,7 @@ import entities.Player;
 import levels.LevelManager;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class Game implements Runnable{
     private GameWindow gameWindow;
@@ -11,6 +12,8 @@ public class Game implements Runnable{
     private Thread gameThread;
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
+    public final static int playerStartX = 100;
+    public final static int playerStartY = 575;
     private Player player;
     private LevelManager levelManager;
     public final static int TILES_DEFAULT_SIZE = 64;
@@ -31,7 +34,7 @@ public class Game implements Runnable{
 
     private void initClasses() {
         levelManager = new LevelManager(this);
-        player = new Player(200,200,(int)(80 * SCALE),(int)(80 * SCALE));
+        player = new Player(playerStartX,playerStartY,(int)(80 * SCALE),(int)(80 * SCALE));
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
     }
 
@@ -42,11 +45,16 @@ public class Game implements Runnable{
 
     public void update(){
         player.update();
-        //System.out.println(player);
+        playerInfo();
         levelManager.update();
     }
 
+    public void playerInfo(){
+        System.out.println(player);
+    }
+
     public void render(Graphics g){
+        levelManager.drawBackground(g);
         levelManager.draw(g);
         player.render(g);
     }
