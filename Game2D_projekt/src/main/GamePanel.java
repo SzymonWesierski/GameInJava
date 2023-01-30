@@ -1,5 +1,7 @@
 package main;
 
+import inputs.KeyboardInputs;
+import inputs.MouseInputs;
 import javax.swing.JPanel;
 import java.awt.*;
 import static main.Game.GAME_WIDTH;
