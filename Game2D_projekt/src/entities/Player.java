@@ -196,5 +196,10 @@ public class Player extends Entity{
         this.down = down;
     }
 
+    @Override
+    public String toString(){
+        return "Player, current action:" + playerAction;
+    }
+
 
 }
