@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,16 +13,16 @@ public class Player extends Entity{
     private BufferedImage[] animations;
     private int animationTick, animationIndex = 0, animationSpeed = 15;
     private int playerAction = IDLE;
-    private boolean moving = false, attacking = false;
+    private boolean moving = false, attacking = false, win = false;
     private boolean left, right, up, down, jump;
     private float playerSpeed = 2.0f;
     private int[][] lvlData;
     private float xDrawOffset = 17 * Game.SCALE;
     private float yDrawOffset = 22 * Game.SCALE;
 
-    private int timeToRespown = 0;
-    private int timeToRestart = 5;
-
+    private float timeToRespown = 0;
+    private float timeToRestart = 5;
+    private int deadPlayer = Constants.PlayerConstants.GetSpriteAmount(DYING);
 
     private float airSpeed = 0f;
     private float gravity = 0.03f * Game.SCALE;
@@ -39,7 +40,28 @@ public class Player extends Entity{
     public void update(){
         updatePosition();
         updateAnimationTick();
+        isDeadOrWin();
         setAnimations();
+    }
+
+    private void isDeadOrWin() {
+        if(hitBox.y + 65 == Game.GAME_HEIGHT && animationIndex != deadPlayer){
+            playerAction = DYING;
+        }
+
+        if(timeToRespown >= timeToRestart) {
+            respawn();
+        }else if (animationIndex == deadPlayer) {
+            timeToRespown += 1;
+        }
+
+        if(hitBox.x >= 1200 && hitBox.y == 575.0){
+            timeToRespown += 0.02f;
+            if(timeToRespown >= 1.0){
+                win = true;
+            }
+        }
+        else win = false;
     }
 
     private void respawn(){
@@ -52,13 +74,9 @@ public class Player extends Entity{
 
     private void updatePosition() {
         moving = false;
-        System.out.println(timeToRespown);
-        if(timeToRespown >= timeToRestart) {
-            respawn();
-        }
 
         if(playerAction != DYING) {
-            if (jump) {
+            if (jump && !win) {
                 jump();
             }
 
@@ -126,11 +144,9 @@ public class Player extends Entity{
         animationTick++;
         if(animationTick >= animationSpeed){
             animationTick = 0;
-            if(animationIndex + 1 == 22 )
-                animationIndex = 22;
-            if (animationIndex == 22)
-                timeToRespown += 1;
-            if(animationIndex != 22){
+            if(animationIndex + 1 == deadPlayer )
+                animationIndex = deadPlayer;
+            if(animationIndex != deadPlayer){
                 animationIndex++;
                 if(animationIndex >= GetSpriteAmount(playerAction)) {
                     animationIndex = playerAction;
@@ -148,10 +164,7 @@ public class Player extends Entity{
     private void setAnimations() {
         int startAnimation = playerAction;
 
-        if(hitBox.y + 65 == Game.GAME_HEIGHT && animationIndex != 22){
-            playerAction = DYING;
-        }
-        if(playerAction != DYING && animationIndex != 22){
+        if(playerAction != DYING && animationIndex != deadPlayer){
             if (moving) {
                 playerAction = RUNNING;
                 animationSpeed = 15;
@@ -222,6 +235,10 @@ public class Player extends Entity{
 
     public void setDown(boolean down) {
         this.down = down;
+    }
+
+    public boolean isWin() {
+        return win;
     }
 
     @Override

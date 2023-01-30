@@ -50,6 +50,10 @@ public class LevelManager {
     }
 
     public void drawBackground(Graphics g) {
-        g.drawImage(LoadSave.GetBackgroundImage(LoadSave.BACKGROUND_DATA),0,0,GAME_WIDTH,GAME_HEIGHT,null);
+        g.drawImage(LoadSave.GetImage(LoadSave.BACKGROUND_DATA),0,0,GAME_WIDTH,GAME_HEIGHT,null);
+    }
+
+    public void drawWinImage(Graphics g){
+        g.drawImage(LoadSave.GetImage(LoadSave.WIN_IMAGE),0,0,GAME_WIDTH,GAME_HEIGHT,null);
     }
 }

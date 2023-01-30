@@ -45,7 +45,7 @@ public class Game implements Runnable{
 
     public void update(){
         player.update();
-        playerInfo();
+        //playerInfo();
         levelManager.update();
     }
 
@@ -57,6 +57,9 @@ public class Game implements Runnable{
         levelManager.drawBackground(g);
         levelManager.draw(g);
         player.render(g);
+        if(player.isWin()){
+            levelManager.drawWinImage(g);
+        }
     }
 
     @Override

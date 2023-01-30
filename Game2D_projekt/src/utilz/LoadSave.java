@@ -12,7 +12,7 @@ public class LoadSave {
     public static final String PLAYER_ATLAS = "Player_Sprite/FinnSprite.png";
     public static final String LEVEL_ATLAS = "Environment/outside_sprites.png";
     public static final String LEVEL_ONE_DATA = "Environment/level_one_data.png";
-
+    public static final String WIN_IMAGE = "win.png";
     public static final String BACKGROUND_DATA = "Environment/sea.png";
 
     public static BufferedImage GetSpriteAtlas(String filename){
@@ -33,7 +33,7 @@ public class LoadSave {
         return img;
     }
 
-    public static BufferedImage GetBackgroundImage(String filename){
+    public static BufferedImage GetImage(String filename){
         BufferedImage img = null;
         InputStream is = LoadSave.class.getResourceAsStream("/" + filename);
 
