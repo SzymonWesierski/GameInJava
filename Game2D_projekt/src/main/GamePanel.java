@@ -20,9 +20,6 @@ public class GamePanel extends JPanel {
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
     }
-    public void updateGame() {
-
-    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         game.render(g);
@@ -30,7 +27,7 @@ public class GamePanel extends JPanel {
     private void setPanelSize() {
         Dimension size = new Dimension(GAME_WIDTH,GAME_HEIGHT);
         setPreferredSize(size);
-        System.out.println("Window size: " + GAME_WIDTH +"x"+GAME_HEIGHT);
+        //System.out.println("Window size: " + GAME_WIDTH +"x"+GAME_HEIGHT);
     }
 
     public Game getGame(){

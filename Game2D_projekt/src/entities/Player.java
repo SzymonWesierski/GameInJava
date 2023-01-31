@@ -2,7 +2,7 @@ package entities;
 
 import main.Game;
 import utilz.Constants;
-import utilz.LoadSave;
+import utilz.LoadImages;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import static utilz.Constants.PlayerConstants.*;
@@ -31,6 +31,7 @@ public class Player extends Entity{
     private boolean inAir = false;
 
 
+
     public Player(float x, float y, float w, float h){
         super(x, y, w, h);
         loadAnimations();
@@ -44,7 +45,7 @@ public class Player extends Entity{
         setAnimations();
     }
 
-    private void isDeadOrWin() {
+    public void isDeadOrWin() {
         if(hitBox.y + 65 == Game.GAME_HEIGHT && animationIndex != deadPlayer){
             playerAction = DYING;
         }
@@ -72,7 +73,7 @@ public class Player extends Entity{
         resetAnimationTick();
     }
 
-    private void updatePosition() {
+    public void updatePosition() {
         moving = false;
 
         if(playerAction != DYING) {
@@ -119,14 +120,14 @@ public class Player extends Entity{
         }
     }
 
-    private void jump() {
+    public void jump() {
         if (inAir)
             return;
         inAir = true;
         airSpeed = jumpSpeed;
     }
 
-    private void resetInAir() {
+    public void resetInAir() {
         inAir = false;
         airSpeed = 0;
     }
@@ -195,7 +196,7 @@ public class Player extends Entity{
 
     private void loadAnimations() {
 
-        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+        BufferedImage img = LoadImages.GetSpriteAtlas(LoadImages.PLAYER_ATLAS);
         animations = new BufferedImage[28];
 
         for(int j = 0; j < animations.length; j++)
@@ -216,6 +217,12 @@ public class Player extends Entity{
         up = false;
         down = false;
     }
+
+    @Override
+    public String toString(){
+        return "Player, current action:" + playerAction+"/"+ animationIndex+", coordination:"+hitBox.x+", "+hitBox.y;
+    }
+
 
     public void setRight(boolean right) {
         this.right = right;
@@ -241,10 +248,176 @@ public class Player extends Entity{
         return win;
     }
 
-    @Override
-    public String toString(){
-        return "Player, current action:" + playerAction+"/"+ animationIndex+", coordination:"+hitBox.x+hitBox.y;
+    public BufferedImage[] getAnimations() {
+        return animations;
+    }
+
+    public int getAnimationTick() {
+        return animationTick;
+    }
+
+    public int getAnimationIndex() {
+        return animationIndex;
+    }
+
+    public int getAnimationSpeed() {
+        return animationSpeed;
+    }
+
+    public int getPlayerAction() {
+        return playerAction;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public boolean isJump() {
+        return jump;
+    }
+
+    public float getPlayerSpeed() {
+        return playerSpeed;
+    }
+
+    public int[][] getLvlData() {
+        return lvlData;
+    }
+
+    public float getxDrawOffset() {
+        return xDrawOffset;
+    }
+
+    public float getyDrawOffset() {
+        return yDrawOffset;
+    }
+
+    public float getTimeToRespown() {
+        return timeToRespown;
+    }
+
+    public float getTimeToRestart() {
+        return timeToRestart;
+    }
+
+    public int getDeadPlayer() {
+        return deadPlayer;
+    }
+
+    public float getAirSpeed() {
+        return airSpeed;
+    }
+
+    public float getGravity() {
+        return gravity;
+    }
+
+    public float getJumpSpeed() {
+        return jumpSpeed;
+    }
+
+    public float getFallSpeedAfterCollision() {
+        return fallSpeedAfterCollision;
+    }
+
+    public boolean isInAir() {
+        return inAir;
+    }
+
+    public void setAnimations(BufferedImage[] animations) {
+        this.animations = animations;
+    }
+
+    public void setAnimationTick(int animationTick) {
+        this.animationTick = animationTick;
+    }
+
+    public void setAnimationIndex(int animationIndex) {
+        this.animationIndex = animationIndex;
+    }
+
+    public void setAnimationSpeed(int animationSpeed) {
+        this.animationSpeed = animationSpeed;
+    }
+
+    public void setPlayerAction(int playerAction) {
+        this.playerAction = playerAction;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+
+    public void setPlayerSpeed(float playerSpeed) {
+        this.playerSpeed = playerSpeed;
+    }
+
+    public void setLvlData(int[][] lvlData) {
+        this.lvlData = lvlData;
+    }
+
+    public void setxDrawOffset(float xDrawOffset) {
+        this.xDrawOffset = xDrawOffset;
+    }
+
+    public void setyDrawOffset(float yDrawOffset) {
+        this.yDrawOffset = yDrawOffset;
+    }
+
+    public void setTimeToRespown(float timeToRespown) {
+        this.timeToRespown = timeToRespown;
+    }
+
+    public void setTimeToRestart(float timeToRestart) {
+        this.timeToRestart = timeToRestart;
+    }
+
+    public void setDeadPlayer(int deadPlayer) {
+        this.deadPlayer = deadPlayer;
+    }
+
+    public void setAirSpeed(float airSpeed) {
+        this.airSpeed = airSpeed;
+    }
+
+    public void setGravity(float gravity) {
+        this.gravity = gravity;
     }
 
 
+    public void setJumpSpeed(float jumpSpeed) {
+        this.jumpSpeed = jumpSpeed;
+    }
+
+    public void setFallSpeedAfterCollision(float fallSpeedAfterCollision) {
+        this.fallSpeedAfterCollision = fallSpeedAfterCollision;
+    }
+
+    public void setInAir(boolean inAir) {
+        this.inAir = inAir;
+    }
 }

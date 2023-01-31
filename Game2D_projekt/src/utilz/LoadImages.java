@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class LoadSave {
+public class LoadImages {
     public static final String PLAYER_ATLAS = "Player_Sprite/FinnSprite.png";
     public static final String LEVEL_ATLAS = "Environment/outside_sprites.png";
     public static final String LEVEL_ONE_DATA = "Environment/level_one_data.png";
@@ -17,7 +17,7 @@ public class LoadSave {
 
     public static BufferedImage GetSpriteAtlas(String filename){
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getResourceAsStream("/" + filename);
+        InputStream is = LoadImages.class.getResourceAsStream("/" + filename);
 
         try{
             img = ImageIO.read(is);
@@ -35,7 +35,7 @@ public class LoadSave {
 
     public static BufferedImage GetImage(String filename){
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getResourceAsStream("/" + filename);
+        InputStream is = LoadImages.class.getResourceAsStream("/" + filename);
 
         try{
             img = ImageIO.read(is);

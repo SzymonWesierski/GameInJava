@@ -1,7 +1,7 @@
 package levels;
 
 import main.Game;
-import utilz.LoadSave;
+import utilz.LoadImages;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,11 +18,11 @@ public class LevelManager {
     public LevelManager(Game game){
         this.game = game;
         importOutsideSprites();
-        levelOne = new Level(LoadSave.GetLevelData());
+        levelOne = new Level(LoadImages.GetLevelData());
     }
 
     private void importOutsideSprites() {
-        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_ATLAS);
+        BufferedImage img = LoadImages.GetSpriteAtlas(LoadImages.LEVEL_ATLAS);
         levelSprite = new BufferedImage[48];
         for(int j = 0; j< height; j++)
             for (int i = 0; i<width; i++){
@@ -38,22 +38,19 @@ public class LevelManager {
                 int index = levelOne.getSpriteIndex(i, j);
                 g.drawImage(levelSprite[index],TILES_SIZE * i,TILES_SIZE * j,TILES_SIZE,TILES_SIZE,null);
             }
-
     }
 
-    public void update(){
+    public void drawBackground(Graphics g) {
+        g.drawImage(LoadImages.GetImage(LoadImages.BACKGROUND_DATA),0,0,GAME_WIDTH,GAME_HEIGHT,null);
+    }
 
+    public void drawWinImage(Graphics g){
+        g.drawImage(LoadImages.GetImage(LoadImages.WIN_IMAGE),0,0,GAME_WIDTH,GAME_HEIGHT,null);
     }
 
     public Level getCurrentLevel(){
         return levelOne;
     }
 
-    public void drawBackground(Graphics g) {
-        g.drawImage(LoadSave.GetImage(LoadSave.BACKGROUND_DATA),0,0,GAME_WIDTH,GAME_HEIGHT,null);
-    }
 
-    public void drawWinImage(Graphics g){
-        g.drawImage(LoadSave.GetImage(LoadSave.WIN_IMAGE),0,0,GAME_WIDTH,GAME_HEIGHT,null);
-    }
 }
