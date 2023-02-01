@@ -40,7 +40,7 @@ public class LoadImages {
         try{
             img = ImageIO.read(is);
         } catch(IOException e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }finally {
             try {
                 is.close();

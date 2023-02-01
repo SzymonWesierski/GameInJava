@@ -5,12 +5,14 @@ import utilz.Constants;
 import utilz.LoadImages;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 
 
-public class Player extends Entity{
-    private BufferedImage[] animations;
+public class Player extends Entity implements NewEntityInterface {
+    private ArrayList<BufferedImage> animations;
     private int animationTick, animationIndex = 0, animationSpeed = 15;
     private int playerAction = IDLE;
     private boolean moving = false, attacking = false, win = false;
@@ -158,7 +160,7 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g){
-        g.drawImage(animations[animationIndex], (int) (hitBox.x - xDrawOffset),(int) (hitBox.y - yDrawOffset), (int)width, (int)height,null);
+        g.drawImage(animations.get(animationIndex), (int) (hitBox.x - xDrawOffset),(int) (hitBox.y - yDrawOffset), (int)width, (int)height,null);
         //drawHitBox(g);
     }
 
@@ -197,10 +199,11 @@ public class Player extends Entity{
     private void loadAnimations() {
 
         BufferedImage img = LoadImages.GetSpriteAtlas(LoadImages.PLAYER_ATLAS);
-        animations = new BufferedImage[28];
+        animations = new ArrayList<>();
 
-        for(int j = 0; j < animations.length; j++)
-                animations[j] = img.getSubimage(32 * j,0,32,32 );
+        for(int i = 0; i < 28; i++){
+            animations.add(img.getSubimage(32 * i,0,32,32 ));
+        }
     }
 
     public void loadLvlData(int[][] lvlData){
@@ -244,107 +247,7 @@ public class Player extends Entity{
         this.down = down;
     }
 
-    public boolean isWin() {
-        return win;
-    }
-
-    public BufferedImage[] getAnimations() {
-        return animations;
-    }
-
-    public int getAnimationTick() {
-        return animationTick;
-    }
-
-    public int getAnimationIndex() {
-        return animationIndex;
-    }
-
-    public int getAnimationSpeed() {
-        return animationSpeed;
-    }
-
-    public int getPlayerAction() {
-        return playerAction;
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public boolean isAttacking() {
-        return attacking;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public boolean isUp() {
-        return up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public boolean isJump() {
-        return jump;
-    }
-
-    public float getPlayerSpeed() {
-        return playerSpeed;
-    }
-
-    public int[][] getLvlData() {
-        return lvlData;
-    }
-
-    public float getxDrawOffset() {
-        return xDrawOffset;
-    }
-
-    public float getyDrawOffset() {
-        return yDrawOffset;
-    }
-
-    public float getTimeToRespown() {
-        return timeToRespown;
-    }
-
-    public float getTimeToRestart() {
-        return timeToRestart;
-    }
-
-    public int getDeadPlayer() {
-        return deadPlayer;
-    }
-
-    public float getAirSpeed() {
-        return airSpeed;
-    }
-
-    public float getGravity() {
-        return gravity;
-    }
-
-    public float getJumpSpeed() {
-        return jumpSpeed;
-    }
-
-    public float getFallSpeedAfterCollision() {
-        return fallSpeedAfterCollision;
-    }
-
-    public boolean isInAir() {
-        return inAir;
-    }
-
-    public void setAnimations(BufferedImage[] animations) {
+    public void setAnimations(ArrayList<BufferedImage> animations) {
         this.animations = animations;
     }
 
@@ -419,5 +322,109 @@ public class Player extends Entity{
 
     public void setInAir(boolean inAir) {
         this.inAir = inAir;
+    }
+
+    public ArrayList<BufferedImage> getAnimations() {
+        return animations;
+    }
+
+    public int getAnimationTick() {
+        return animationTick;
+    }
+
+    public int getAnimationIndex() {
+        return animationIndex;
+    }
+
+    public int getAnimationSpeed() {
+        return animationSpeed;
+    }
+
+    public int getPlayerAction() {
+        return playerAction;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public boolean isJump() {
+        return jump;
+    }
+
+    public float getPlayerSpeed() {
+        return playerSpeed;
+    }
+
+    public int[][] getLvlData() {
+        return lvlData;
+    }
+
+    public float getxDrawOffset() {
+        return xDrawOffset;
+    }
+
+    public float getyDrawOffset() {
+        return yDrawOffset;
+    }
+
+    public float getTimeToRespown() {
+        return timeToRespown;
+    }
+
+    public float getTimeToRestart() {
+        return timeToRestart;
+    }
+
+    public int getDeadPlayer() {
+        return deadPlayer;
+    }
+
+    public float getAirSpeed() {
+        return airSpeed;
+    }
+
+    public float getGravity() {
+        return gravity;
+    }
+
+    public float getJumpSpeed() {
+        return jumpSpeed;
+    }
+
+    public float getFallSpeedAfterCollision() {
+        return fallSpeedAfterCollision;
+    }
+
+    public boolean isInAir() {
+        return inAir;
+    }
+
+    public void setAnimationAction(int action) {
+        this.playerAction = action;
     }
 }

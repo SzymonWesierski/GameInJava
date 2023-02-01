@@ -7,28 +7,26 @@ import org.junit.Test;
 import levels.LevelManager;
 import utilz.Constants;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import static main.Game.*;
 import static org.junit.Assert.*;
 import static utilz.Constants.PlayerConstants.DYING;
 import static utilz.Constants.PlayerConstants.IDLE;
 
 public class PlayerTests {
-    private Game game;
     private LevelManager levelManager;
     private Player player;
 
     @Before
     public void setUp() {
-        game = new Game();
         levelManager = new LevelManager(new Game());
         player = new Player(playerStartX,playerStartY,(int)(80 * SCALE),(int)(80 * SCALE));
     }
 
     @Test
     public void jumpTest() {
-        player.getHitBox().x = playerStartX;
-        player.getHitBox().y = playerStartY;
-
         player.setJump(true);
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
         player.updatePosition();
@@ -38,9 +36,6 @@ public class PlayerTests {
 
     @Test
     public void testRespawn() {
-        player.getHitBox().x = playerStartX;
-        player.getHitBox().y = playerStartY;
-
         player.setTimeToRespown(player.getTimeToRestart() + 1);
         player.update();
         assertEquals(player.getHitBox().x, playerStartX, 0.001);
@@ -51,9 +46,6 @@ public class PlayerTests {
 
     @Test
     public void updatePositionTest() {
-        player.getHitBox().x = playerStartX;
-        player.getHitBox().y = playerStartY;
-
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
 
         player.setLeft(true);
@@ -67,9 +59,6 @@ public class PlayerTests {
     }
     @Test
     public void testDying() {
-        player.getHitBox().x = playerStartX;
-        player.getHitBox().y = playerStartY;
-
         player.getHitBox().y = Game.GAME_HEIGHT - 65;
         player.update();
         assertEquals(player.getPlayerAction(), DYING);
@@ -77,9 +66,6 @@ public class PlayerTests {
 
     @Test
     public void isDeadOrWinTest() {
-        player.getHitBox().x = playerStartX;
-        player.getHitBox().y = playerStartY;
-
         player.getHitBox().y = Game.GAME_HEIGHT - 65;
         player.update();
         assertEquals(Constants.PlayerConstants.DYING, player.getPlayerAction());
@@ -96,9 +82,6 @@ public class PlayerTests {
 
     @Test
     public void testResetInAir() {
-        player.getHitBox().x = playerStartX;
-        player.getHitBox().y = playerStartY;
-
         player.jump();
         player.resetInAir();
         assertEquals(false, player.isInAir());
@@ -106,12 +89,11 @@ public class PlayerTests {
 
     @Test
     public void testToString() {
-        player.getHitBox().x = playerStartX;
-        player.getHitBox().y = playerStartY;
         String expected = "Player, current action:0/0, coordination:100.0, 575.0";
         assertEquals(expected, player.toString());
     }
 
+    @Test
     public void testResetDirBooleans() {
         player.setUp(true);
         player.setDown(true);
@@ -120,12 +102,164 @@ public class PlayerTests {
 
         player.resetDirBooleans();
 
-        assertFalse(!player.isUp());
+        assertFalse(player.isUp());
         assertFalse(player.isDown());
         assertFalse(player.isLeft());
         assertFalse(player.isRight());
     }
 
+    @Test
+    public void testRight() {
+        player.setRight(true);
+        assertEquals(true, player.isRight());
+    }
+
+    @Test
+    public void testLeft() {
+        player.setLeft(true);
+        assertEquals(true, player.isLeft());
+    }
+
+    @Test
+    public void testJump() {
+        player.setJump(true);
+        assertEquals(true, player.isJump());
+    }
+
+    @Test
+    public void testUp() {
+        player.setUp(true);
+        assertTrue( player.isUp());
+    }
+
+    @Test
+    public void testDown() {
+        player.setDown(true);
+        assertTrue( player.isDown());
+    }
+
+    @Test
+    public void testAnimations() {
+        ArrayList<BufferedImage> newArray = new ArrayList<>();
+        player.setAnimations(newArray);
+        assertEquals(newArray, player.getAnimations());
+    }
+
+    @Test
+    public void testAnimationTick() {
+        int number = 5;
+        player.setAnimationTick(number);
+        assertEquals(number, player.getAnimationTick());
+    }
+
+    @Test
+    public void testAnimationIndex() {
+        int index = 8;
+        player.setAnimationIndex(index);
+        assertEquals(index, player.getAnimationIndex());
+    }
+
+    @Test
+    public void testAnimationSpeed() {
+        int speed = 2;
+        player.setAnimationSpeed(speed);
+        assertEquals(speed, player.getAnimationSpeed());
+    }
+
+    @Test
+    public void testPlayerAction() {
+        int action = Constants.PlayerConstants.JUMP;
+        player.setPlayerAction(action);
+        assertEquals(action, player.getPlayerAction());
+    }
+
+    @Test
+    public void testMoving() {
+        player.setMoving(true);
+        assertTrue(player.isMoving());
+    }
+
+    @Test
+    public void testWin() {
+        player.setWin(true);
+        assertTrue(player.isWin());
+    }
+
+    @Test
+    public void testPlayerSpeed() {
+        float speed = 2.0f;
+        player.setPlayerSpeed(speed);
+        assertEquals(speed, player.getPlayerSpeed(),0.01);
+    }
+
+    @Test
+    public void testLvlData() {
+        int[][] tab = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        player.setLvlData(tab);
+        assertArrayEquals(tab, player.getLvlData());
+    }
+
+    @Test
+    public void testxDrawOffset() {
+        float x = 5.0f;
+        player.setxDrawOffset(x);
+        assertEquals(x, player.getxDrawOffset(), 0.01);
+    }
+
+    @Test
+    public void testyDrawOffset() {
+        float y = 7.0f;
+        player.setyDrawOffset(y);
+        assertEquals(y, player.getyDrawOffset(), 0.01);
+    }
+
+    @Test
+    public void testTimeToRestart() {
+        float y = 7.2f;
+        player.setTimeToRestart(y);
+        assertEquals(y, player.getTimeToRestart(), 0.01);
+    }
+
+    @Test
+    public void testDeadPlayer() {
+        int i = DYING;
+        player.setDeadPlayer(i);
+        assertEquals(i, player.getDeadPlayer());
+    }
+
+    @Test
+    public void testAirSpeed() {
+        float y = 7.2f;
+        player.setAirSpeed(y);
+        assertEquals(y, player.getAirSpeed(), 0.01);
+    }
+
+    @Test
+    public void testGravity() {
+        float y = 7.2f;
+        player.setGravity(y);
+        assertEquals(y, player.getGravity(), 0.01);
+    }
+
+    @Test
+    public void testJumpSpeed() {
+        float y = 7.2f;
+        player.setJumpSpeed(y);
+        assertEquals(y, player.getJumpSpeed(), 0.01);
+    }
+
+    @Test
+    public void testFallSpeedAfterCollision() {
+        float y = 7.2f;
+        player.setFallSpeedAfterCollision(y);
+        assertEquals(y, player.getFallSpeedAfterCollision(), 0.01);
+    }
+
+    @Test
+    public void testInAir() {
+        player.setInAir(true);
+        assertTrue(player.isInAir());
+    }
 
 }
 

@@ -5,12 +5,13 @@ import utilz.LoadImages;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static main.Game.*;
 
 public class LevelManager {
     private final Game game;
-    private BufferedImage[] levelSprite;
+    private ArrayList<BufferedImage> levelSprite;
     private Level levelOne;
     private final int width = 12;
     private final int height = 4;
@@ -23,11 +24,11 @@ public class LevelManager {
 
     private void importOutsideSprites() {
         BufferedImage img = LoadImages.GetSpriteAtlas(LoadImages.LEVEL_ATLAS);
-        levelSprite = new BufferedImage[48];
+        levelSprite = new ArrayList<BufferedImage>();
         for(int j = 0; j< height; j++)
             for (int i = 0; i<width; i++){
-                int index = j * width + i;
-                levelSprite[index] = img.getSubimage(i*32,j*32,32,32);
+                //int index = j * width + i;
+                levelSprite.add(img.getSubimage(i*32,j*32,32,32));
             }
     }
 
@@ -36,7 +37,7 @@ public class LevelManager {
         for(int j = 0; j< Game.TILES_IN_HEIGHT; j++)
             for(int i = 0; i < Game.TILES_IN_WIDTH; i++){
                 int index = levelOne.getSpriteIndex(i, j);
-                g.drawImage(levelSprite[index],TILES_SIZE * i,TILES_SIZE * j,TILES_SIZE,TILES_SIZE,null);
+                g.drawImage(levelSprite.get(index),TILES_SIZE * i,TILES_SIZE * j,TILES_SIZE,TILES_SIZE,null);
             }
     }
 

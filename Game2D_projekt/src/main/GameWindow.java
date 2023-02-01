@@ -27,6 +27,11 @@ public class GameWindow {
                 gamePanel.getGame().windowFocusLost();
             }
         });
+
+    }
+
+    public JFrame getJframe() {
+        return jframe;
     }
 
 }
